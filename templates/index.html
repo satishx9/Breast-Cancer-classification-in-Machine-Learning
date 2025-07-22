@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Breast Cancer Classification</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <div class="container">
+        <h1>
+            <span><img src="/static/Breast-Cancer-Ribbon-PNG-Image.png" ></span>Breast Cancer Classification</h1>
+        <form method="post" enctype="multipart/form-data" id="upload-form">
+            <div id="drop-zone">
+                <p>Drag & drop your CSV file here, or click to select file</p>
+                <input type="file" name="file" id="file-input" accept=".csv" required>
+                <p id="file-name-display"></p>
+            </div>
+            <button type="submit">Upload and Evaluate</button>
+        </form>
+
+        {% if error %}
+            <div class="error-message">
+                <p><strong>Error:</strong> {{ error }}</p>
+            </div>
+        {% endif %}
+
+        {% if filename %}
+            <h2>Results for {{ filename }}</h2>
+        {% endif %}
+
+        {% if results %}
+            <div class="results-grid">
+            {% for model_name, metrics in results.items() %}
+                <div class="model-card">
+                    <h3>{{ model_name }}</h3>
+                    {% if metrics.error %}
+                        <p class="error-message">Error: {{ metrics.error }}</p>
+                    {% else %}
+                        <p>Accuracy: {{ "%.2f"|format(metrics.accuracy * 100) }}%</p>
+                        <p>Precision: {{ "%.2f"|format(metrics.precision * 100) }}%</p>
+                        <p>Recall: {{ "%.2f"|format(metrics.recall * 100) }}%</p>
+                        <p>F1 Score: {{ "%.2f"|format(metrics.f1 * 100) }}%</p>
+                        <h4>Confusion Matrix:</h4>
+                        <table class="confusion-matrix">
+                            {% for row in metrics.cm %}
+                            <tr>
+                                {% for cell in row %}
+                                <td>{{ cell }}</td>
+                                {% endfor %}
+                            </tr>
+                            {% endfor %}
+                        </table>
+                    {% endif %}
+                </div>
+            {% endfor %}
+            </div>
+        {% endif %}
+    </div>
+
+    <script>
+        const dropZone = document.getElementById('drop-zone');
+        const fileInput = document.getElementById('file-input');
+        const fileNameDisplay = document.getElementById('file-name-display');
+        const uploadForm = document.getElementById('upload-form');
+
+        dropZone.addEventListener('click', () => {
+            fileInput.click();
+        });
+
+        fileInput.addEventListener('change', () => {
+            if (fileInput.files.length > 0) {
+                fileNameDisplay.textContent = `Selected file: ${fileInput.files[0].name}`;
+            } else {
+                fileNameDisplay.textContent = '';
+            }
+        });
+
+        dropZone.addEventListener('dragover', (event) => {
+            event.preventDefault();
+            dropZone.classList.add('drag-over');
+        });
+
+        dropZone.addEventListener('dragleave', () => {
+            dropZone.classList.remove('drag-over');
+        });
+
+        dropZone.addEventListener('drop', (event) => {
+            event.preventDefault();
+            dropZone.classList.remove('drag-over');
+            const files = event.dataTransfer.files;
+            if (files.length > 0) {
+                if (files[0].name.endsWith('.csv')) {
+                    fileInput.files = files;
+                    fileNameDisplay.textContent = `Selected file: ${files[0].name}`;
+                } else {
+                    fileNameDisplay.textContent = 'Please drop a .csv file.';
+                    fileInput.value = ''; // Clear any previously selected file
+                }
+            }
+        });
+
+        // Optional: Clear file name display on form reset if you add a reset button
+        // uploadForm.addEventListener('reset', () => {
+        //     fileNameDisplay.textContent = '';
+        // });
+    </script>
+</body>
+</html> 

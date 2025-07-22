@@ -1,0 +1,190 @@
+body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    line-height: 1.6;
+    margin: 0;
+    padding: 0;
+    background-color: #fff0f5; /* Lavender Blush - very light pink */
+    color: #f8afe2; /* Dark purplish pink for text */
+}
+
+.container {
+    max-width: 1200px;
+    margin: 20px auto;
+    padding: 20px;
+    background-color: #ffffff; /* White */
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05); /* Softer shadow */
+}
+
+h1 {
+    color: #161616; /* MediumVioletRed */
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+h2 {
+    color: #393838; 
+    margin-top: 40px;
+    margin-bottom: 20px;
+    border-bottom: 2px solid #f8c0d8; /* Light pink border */
+    padding-bottom: 10px;
+}
+
+h3 {
+    color: #6f5666; /* MediumVioletRed */
+    margin-top: 0;
+}
+
+.container h1{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    font-size: 40px;
+}
+
+.container h1 span img{
+    width: 100px;
+    height: 80px;
+}
+form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 15px;
+    margin-bottom: 30px;
+    padding: 20px;
+    background-color: #ffe4e1; /* Misty Rose - soft pink */
+    border-radius: 8px;
+}
+
+input[type="file"] {
+    /* display: none; */ /* Kept for reference, actual input hidden via JS interaction */
+    border: 1px solid #ffb6c1; /* LightPink border, if it were visible */
+    padding: 10px;
+    border-radius: 4px;
+    width: 100%;
+    max-width: 400px;
+    display: none; /* Hiding the default input */
+}
+
+#drop-zone {
+    border: 2px dashed #ffb6c1; /* LightPink dashed border */
+    border-radius: 8px;
+    padding: 30px;
+    text-align: center;
+    cursor: pointer;
+    background-color: #fff5f8; /* Very pale pink */
+    transition: border-color 0.3s ease, background-color 0.3s ease;
+    width: 100%;
+    max-width: 450px;
+    margin: 0 auto 20px auto;
+}
+
+#drop-zone p {
+    margin: 0;
+    color: #865070; /* Muted pink */
+    font-size: 16px;
+}
+
+#drop-zone.drag-over {
+    border-color: #ff69b4; /* HotPink */
+    background-color: #ffeaf2; /* Slightly more saturated pale pink */
+}
+
+#file-name-display {
+    margin-top: 10px;
+    font-size: 14px;
+    color: #c71585; /* MediumVioletRed */
+    font-weight: bold;
+}
+
+button[type="submit"] {
+    background-color: #ff69b4; /* HotPink */
+    color: #ffffff; /* White text */
+    padding: 12px 25px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background-color 0.3s ease;
+}
+
+button[type="submit"]:hover {
+    background-color: #ff1493; /* DeepPink */
+}
+
+.results-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 20px;
+}
+
+.model-card {
+    background-color: #fffafa; /* Snow - very light pink/off-white */
+    padding: 20px;
+    border-radius: 8px;
+    border: 1px solid #f8c0d8; /* Light pink border */
+    box-shadow: 0 1px 5px rgba(0,0,0,0.03);
+}
+
+.model-card p {
+    margin: 8px 0;
+    font-size: 15px;
+    color: #581845; /* Dark purplish pink, same as body */
+}
+
+.model-card h4 {
+    margin-top: 15px;
+    margin-bottom: 5px;
+    color: #865070; /* Muted pink */
+}
+
+.confusion-matrix {
+    width: auto;
+    margin-top: 10px;
+    border-collapse: collapse;
+    font-size: 18px;
+}
+
+.confusion-matrix td, .confusion-matrix th {
+    border: 1px solid #201f1f; /* Light pink border */
+    padding: 8px;
+    text-align: center;
+    color: #1b1919;
+}
+
+.confusion-matrix th {
+    background-color: #1b1919; /* Misty Rose */
+    color: #1b1719;
+}
+
+.error-message {
+    background-color: #ffcdd2; /* Light red-pink for errors */
+    color: #b71c1c; /* Dark red for error text */
+    padding: 10px 15px;
+    border: 1px solid #ef9a9a; /* Red-pink border */
+    border-radius: 4px;
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+@media (max-width: 600px) {
+    .results-grid {
+        grid-template-columns: 1fr;
+    }
+
+    form {
+        padding: 15px;
+    }
+    
+    #drop-zone {
+        padding: 20px;
+        background: #fae1e55e;
+    }
+
+    /* input[type="file"], already hidden so no specific media query needed for it here */
+    button[type="submit"] {
+        width: 90%;
+    }
+}
